@@ -1,0 +1,31 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+    include-exception: false
+
+spring:
+  datasource.url: jdbc:h2:mem:test
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  kafka:
+    bootstrap-servers: localhost:9092
+    listener:
+      concurrency: 1
+    consumer:
+      group-id: associado
+      bootstrapServer: ${spring.kafka.bootstrap-servers}
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+    producer:
+      retries: 4
+      bootstrapServers: ${spring.kafka.bootstrap-servers}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+  jackons:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+# http://localhost:8081/h2-console/
